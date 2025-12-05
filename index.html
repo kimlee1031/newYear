@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026년 운세보기 - 끌리는 사람은 1%가 다르다</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #000000;
+            border: 2px solid #D4AF37;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37, #FFD700, #D4AF37);
+        }
+
+        .title-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .year-badge {
+            display: inline-block;
+            background: #D4AF37;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .fortune-button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .fortune-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+        }
+
+        .fortune-button:active {
+            transform: translateY(0);
+        }
+
+        .fortune-result {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .fortune-result.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fortune-category {
+            font-size: 24px;
+            color: #D4AF37;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .fortune-message {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #D4AF37;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .fortune-message p {
+            margin-bottom: 15px;
+        }
+
+        .fortune-message p:last-child {
+            margin-bottom: 0;
+        }
+
+        .reset-button {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .reset-button:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .decorative-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            margin: 30px 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .main-title {
+                font-size: 24px;
+            }
+
+            .fortune-category {
+                font-size: 20px;
+            }
+
+            .fortune-message {
+                font-size: 14px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title-section">
+            <h1 class="main-title">끌리는 사람은</h1>
+            <div class="subtitle">1%가 다르다</div>
+            <div class="year-badge">2026년 운세보기</div>
+        </div>
+
+        <div id="initial-section">
+            <button class="fortune-button" onclick="showFortune()">
+                2026년 운세보기
+            </button>
+        </div>
+
+        <div id="fortune-result" class="fortune-result">
+            <div class="decorative-line"></div>
+            <div class="fortune-category" id="fortune-category"></div>
+            <div class="fortune-message" id="fortune-message"></div>
+            <button class="reset-button" onclick="showFortune()">
+                다시 운세보기
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const fortunes = [
+            {
+                category: "🌟 행동하는 1% 계열",
+                messages: [
+                    "오늘 당신은 알고만 있던 것을 행동으로 바꾸는 사람이 됩니다.",
+                    "작은 결심 하나가 예상보다 큰 파도를 일으키는 날입니다.",
+                    "미뤄둔 일이 있다면 오늘이 '1%의 차이'를 만드는 순간이에요.",
+                    "오늘의 행운은 멈춰 있던 것을 움직일 때 켜집니다.",
+                    "당신의 용기가 누군가에게는 오래 기억될 변화로 이어집니다."
+                ]
+            },
+            {
+                category: "🌱 마음의 방향 / 자기변화",
+                messages: [
+                    "오늘은 마음이 가리키는 방향이 유난히 또렷해지는 하루입니다.",
+                    "당신이 진짜 원하던 삶의 실마리가 의외의 순간에 펼쳐집니다.",
+                    "오늘의 선택이 1년 뒤 가장 고마운 선택이 됩니다.",
+                    "감정이 아닌 가치로 움직일 때, 하루가 선명해집니다.",
+                    "당신의 시선이 머무는 곳에 새로운 가능성이 움트고 있어요."
+                ]
+            },
+            {
+                category: "🤝 관계·끌림·심리 계열",
+                messages: [
+                    "오늘의 당신은 누군가에게 '잊히지 않는 인상'을 남깁니다.",
+                    "말 한마디의 온도가 관계를 부드럽게 풀어주는 하루입니다.",
+                    "당신의 따뜻함이 오래 머무는 사람을 끌어당깁니다.",
+                    "오늘은 타인의 마음을 읽는 감각이 특별히 예민해지는 날이에요.",
+                    "작은 배려 하나가 큰 신뢰로 이어집니다."
+                ]
+            },
+            {
+                category: "✨ 자신감·자기효능감 상승 계열",
+                messages: [
+                    "오늘의 당신은 스스로 생각한 것보다 훨씬 강한 사람입니다.",
+                    "당신의 진심이 예상보다 더 멀리, 더 깊게 전해집니다.",
+                    "마음속 불안이 자리를 비우고 '가능성'이 들어오는 날입니다.",
+                    "당신의 재능은 오늘 새로운 방식으로 빛납니다.",
+                    "지금의 당신으로 충분합니다. 그 사실이 오늘을 바꿉니다."
+                ]
+            },
+            {
+                category: "🌟 활력·기회·운세 느낌 강조",
+                messages: [
+                    "예상하지 않은 기회가 가까운 곳에서 움직이고 있어요.",
+                    "오늘의 흐름은 당신에게 유리하게 기울어 있습니다.",
+                    "멈춰 있던 일이 자연스럽게 풀리기 시작합니다.",
+                    "당신의 직감이 기회로 연결되는 날입니다.",
+                    "오늘은 '시작하기 좋은 징후'가 도처에 깔려 있습니다."
+                ]
+            }
+        ];
+
+        function showFortune() {
+            // 랜덤으로 운세 선택
+            const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+            
+            // 초기 섹션 숨기기
+            document.getElementById('initial-section').style.display = 'none';
+            
+            // 운세 결과 표시
+            document.getElementById('fortune-category').textContent = randomFortune.category;
+            
+            // 메시지들을 p 태그로 만들어서 표시
+            const messageHtml = randomFortune.messages.map(msg => `<p>${msg}</p>`).join('');
+            document.getElementById('fortune-message').innerHTML = messageHtml;
+            
+            // 결과 섹션 표시
+            const resultSection = document.getElementById('fortune-result');
+            resultSection.classList.add('show');
+            
+            // 스크롤을 결과로 이동
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>
+
