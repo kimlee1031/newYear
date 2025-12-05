@@ -268,24 +268,18 @@
         ];
 
         function showFortune() {
-            // 랜덤으로 운세 선택
             const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
             
-            // 초기 섹션 숨기기
             document.getElementById('initial-section').style.display = 'none';
             
-            // 운세 결과 표시
             document.getElementById('fortune-category').textContent = randomFortune.category;
             
-            // 메시지들을 p 태그로 만들어서 표시
             const messageHtml = randomFortune.messages.map(msg => `<p>${msg}</p>`).join('');
             document.getElementById('fortune-message').innerHTML = messageHtml;
             
-            // 결과 섹션 표시
             const resultSection = document.getElementById('fortune-result');
             resultSection.classList.add('show');
             
-            // 스크롤을 결과로 이동
             resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     </script>
